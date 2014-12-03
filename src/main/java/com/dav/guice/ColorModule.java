@@ -3,8 +3,10 @@ package com.dav.guice;
 import com.dav.guice.service.ColorGenerator;
 import com.dav.guice.service.ColorProcessor;
 import com.dav.guice.service.impl.BlueColorGenerator;
+import com.dav.guice.service.impl.BlueColorProcessor;
 import com.dav.guice.service.impl.GeneralColorProcessor;
 import com.dav.guice.service.impl.YellowColorGenerator;
+import com.dav.guice.service.impl.YellowColorProcessor;
 import com.google.inject.AbstractModule;
 import com.google.inject.Inject;
 import com.google.inject.Provider;
@@ -17,24 +19,19 @@ public class ColorModule extends AbstractModule {
 
 	@Override
 	protected void configure() {
-		bind(ColorProcessor.class).annotatedWith(Names.named("generalColorProcessor")).toProvider(ColorProcessorProvider.class).asEagerSingleton();
+		bind(ColorProcessor.class).annotatedWith(Names.named("generalColorProcessor")).to(GeneralColorProcessor.class).asEagerSingleton();
+		bind(ColorProcessor.class).annotatedWith(Names.named("blueColorProcessor")).toProvider(BlueColorProcessorProvider.class).asEagerSingleton();
 	}
 
-	public static class ColorProcessorProvider implements Provider<ColorProcessor> {
-
-		@Inject
-		@Named("yellowGenerator")
-		ColorGenerator yellowColorGenerator;
-
+	public static class BlueColorProcessorProvider implements Provider<ColorProcessor> {
 		@Inject
 		@Named("blueGenerator")
 		ColorGenerator blueColorGenerator;
 
 		@Override
 		public ColorProcessor get() {
-			return new GeneralColorProcessor(yellowColorGenerator, blueColorGenerator);
+			return new BlueColorProcessor(blueColorGenerator);
 		}
-
 	}
 
 	@Provides
@@ -51,14 +48,11 @@ public class ColorModule extends AbstractModule {
 		return new YellowColorGenerator();
 	}
 
-	// @Provides
-	// @Singleton
-	// @Named("generalColorProcessor")
-	// public ColorProcessor generalColorProcessor(@Named("yellowGenerator")
-	// ColorGenerator yellowColorGenerator,@Named("blueGenerator")
-	// ColorGenerator blueColorGenerator) {
-	// return new
-	// GeneralColorProcessor(yellowColorGenerator,blueColorGenerator);
-	// }
+	@Provides
+	@Singleton
+	@Named("yellowColorProcessor")
+	public ColorProcessor generalColorProcessor(@Named("yellowGenerator") ColorGenerator yellowColorGenerator) {
+		return new YellowColorProcessor(yellowColorGenerator);
+	}
 
 }
