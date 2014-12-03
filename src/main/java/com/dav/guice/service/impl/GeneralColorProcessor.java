@@ -6,7 +6,7 @@ import com.google.inject.Inject;
 import com.google.inject.name.Named;
 
 public class GeneralColorProcessor implements ColorProcessor {
-	
+
 	@Inject
 	@Named("yellowGenerator")
 	private ColorGenerator yellowGenerator;
@@ -14,12 +14,6 @@ public class GeneralColorProcessor implements ColorProcessor {
 	@Inject
 	@Named("blueGenerator")
 	private ColorGenerator blueGenerator;
-
-//	public GeneralColorProcessor(ColorGenerator yellowGenerator, ColorGenerator blueGenerator) {
-//		super();
-//		this.yellowGenerator = yellowGenerator;
-//		this.blueGenerator = blueGenerator;
-//	}
 
 	@Override
 	public void process() {
