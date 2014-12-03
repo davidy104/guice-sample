@@ -23,12 +23,17 @@ public class ColorProcessTest {
 	@Inject
 	@Named("yellowColorProcessor")
 	private ColorProcessor yellowColorProcessor;
+	
+	@Inject
+	@Named("yellowColorProcessor1")
+	private ColorProcessor yellowColorProcessor1;
 
 	@Test
 	public void test() {
 		colorProcessor.process();
 		blueColorProcessor.process();
 		yellowColorProcessor.process();
+		yellowColorProcessor1.process();
 	}
 
 }

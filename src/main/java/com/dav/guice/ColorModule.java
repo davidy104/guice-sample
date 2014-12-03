@@ -5,6 +5,7 @@ import com.dav.guice.service.ColorProcessor;
 import com.dav.guice.service.impl.BlueColorGenerator;
 import com.dav.guice.service.impl.BlueColorProcessor;
 import com.dav.guice.service.impl.GeneralColorProcessor;
+import com.dav.guice.service.impl.YellowColor1Processor;
 import com.dav.guice.service.impl.YellowColorGenerator;
 import com.dav.guice.service.impl.YellowColorProcessor;
 import com.google.inject.AbstractModule;
@@ -21,6 +22,7 @@ public class ColorModule extends AbstractModule {
 	protected void configure() {
 		bind(ColorProcessor.class).annotatedWith(Names.named("generalColorProcessor")).to(GeneralColorProcessor.class).asEagerSingleton();
 		bind(ColorProcessor.class).annotatedWith(Names.named("blueColorProcessor")).toProvider(BlueColorProcessorProvider.class).asEagerSingleton();
+		bind(ColorProcessor.class).annotatedWith(Names.named("yellowColorProcessor1")).to(YellowColor1Processor.class).asEagerSingleton();
 	}
 
 	public static class BlueColorProcessorProvider implements Provider<ColorProcessor> {
